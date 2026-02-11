@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Critical Update Required ❤️</title>
+    <style>
+        :root {
+            --primary: #ff4757;
+            --secondary: #2ed573;
+            --bg: #ffe2e2;
+            --text: #2f3542;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: var(--bg);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden; /* Prevents scrolling when button runs away */
+            text-align: center;
+        }
+
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            max-width: 90%;
+            width: 400px;
+            transition: all 0.3s ease;
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            color: var(--text);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            position: relative;
+            height: 60px; /* Space for buttons */
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+
+        #yesBtn {
+            background-color: var(--secondary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(46, 213, 115, 0.4);
+        }
+
+        #yesBtn:hover {
+            transform: scale(1.05);
+        }
+
+        #noBtn {
+            background-color: var(--primary);
+            color: white;
+            position: absolute; /* Allows free movement */
+        }
+
+        /* Success Message State */
+        .hidden {
+            display: none;
+        }
+        
+        #success-img {
+            width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="question-card">
+        <h1>System Alert ⚠️</h1>
+        <p>I've detected a missing dependency in my life loop.<br><strong>Will you be my Valentine?</strong></p>
+        
+        <div class="btn-group">
+            <button id="yesBtn">YES! 😍</button>
+            <button id="noBtn">No 🙄</button>
+        </div>
+    </div>
+
+    <div class="container hidden" id="success-card">
+        <h1>Deployment Successful! 🚀</h1>
+        <p>You are now officially stuck with me.<br>See you on Feb 14th! 🍷</p>
+        <img id="success-img" src="https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif" alt="Celebration">
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const questionCard = document.getElementById('question-card');
+        const successCard = document.getElementById('success-card');
+
+        // 1. The "Run Away" Logic
+        const moveButton = () => {
+            // Get the container dimensions so it doesn't fly off screen
+            const wrapper = document.body.getBoundingClientRect();
+            const btn = noBtn.getBoundingClientRect();
+
+            // Calculate random positions within the screen
+            const maxX = wrapper.width - btn.width;
+            const maxY = wrapper.height - btn.height;
+
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+
+            // Apply new position (fixed ensures it breaks out of the flex container)
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        };
+
+        // Trigger on hover (Desktop) and Touch (Mobile)
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Stop the click from registering
+            moveButton();
+        });
+
+        // 2. The "Yes" Logic
+        yesBtn.addEventListener('click', () => {
+            questionCard.classList.add('hidden');
+            successCard.classList.remove('hidden');
+            
+            // Optional: Fire confetti if you want to add a library later
+        });
+    </script>
+</body>
+</html>
