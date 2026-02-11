@@ -83,7 +83,7 @@
             position: absolute; /* Allows free movement */
         }
 
-        /* Success Message State */
+    
         .hidden {
             display: none;
         }
@@ -115,45 +115,45 @@
         <img id="success-img" src="https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif" alt="Celebration">
     </div>
 
-    <script>
-        const noBtn = document.getElementById('noBtn');
-        const yesBtn = document.getElementById('yesBtn');
-        const questionCard = document.getElementById('question-card');
-        const successCard = document.getElementById('success-card');
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-        // 1. The "Run Away" Logic
-        const moveButton = () => {
-            // Get the container dimensions so it doesn't fly off screen
-            const wrapper = document.body.getBoundingClientRect();
-            const btn = noBtn.getBoundingClientRect();
+<script>
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const questionCard = document.getElementById('question-card');
+    const successCard = document.getElementById('success-card');
 
-            // Calculate random positions within the screen
-            const maxX = wrapper.width - btn.width;
-            const maxY = wrapper.height - btn.height;
+    const moveButton = () => {
+        const wrapper = document.body.getBoundingClientRect();
+        const btn = noBtn.getBoundingClientRect();
+        const maxX = wrapper.width - btn.width;
+        const maxY = wrapper.height - btn.height;
 
-            const randomX = Math.floor(Math.random() * maxX);
-            const randomY = Math.floor(Math.random() * maxY);
+        const randomX = Math.floor(Math.random() * maxX);
+        const randomY = Math.floor(Math.random() * maxY);
 
-            // Apply new position (fixed ensures it breaks out of the flex container)
-            noBtn.style.position = 'fixed';
-            noBtn.style.left = randomX + 'px';
-            noBtn.style.top = randomY + 'px';
-        };
+        noBtn.style.position = 'fixed';
+        noBtn.style.left = randomX + 'px';
+        noBtn.style.top = randomY + 'px';
+    };
 
-        // Trigger on hover (Desktop) and Touch (Mobile)
-        noBtn.addEventListener('mouseover', moveButton);
-        noBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault(); // Stop the click from registering
-            moveButton();
+    noBtn.addEventListener('mouseover', moveButton);
+    noBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault(); 
+        moveButton();
+    });
+
+    yesBtn.addEventListener('click', () => {
+        questionCard.classList.add('hidden');
+        successCard.classList.remove('hidden');
+        
+        confetti({
+            particleCount: 150,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ['#ff0000', '#ff69b4', '#ffffff']
         });
-
-        // 2. The "Yes" Logic
-        yesBtn.addEventListener('click', () => {
-            questionCard.classList.add('hidden');
-            successCard.classList.remove('hidden');
-            
-            // Optional: Fire confetti if you want to add a library later
-        });
-    </script>
+    });
+</script>
 </body>
 </html>
